@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="EventHR Pro">
+    <meta name="theme-color" content="#4e73df">
+    <title>EventHR Pro</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='15' fill='%234e73df'/%3E%3Ctext x='50' y='65' font-size='36' fill='white' text-anchor='middle' font-family='Arial'%3EE%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='15' fill='%234e73df'/%3E%3Ctext x='50' y='65' font-size='36' fill='white' text-anchor='middle' font-family='Arial'%3EE%3C/text%3E%3C/svg%3E">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #858796;
+            --success-color: #1cc88a;
+            --info-color: #36b9cc;
+            --warning-color: #f6c23e;
+            --danger-color: #e74a3b;
+            --light-color: #f8f9fc;
+            --dark-color: #5a5c69;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background-color: white;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            padding: 0.75rem 1rem;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            color: var(--primary-color) !important;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand i {
+            margin-right: 0.5rem;
+        }
+
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 600;
+            padding: 0.5rem 1rem !important;
+            border-radius: 0.35rem;
+            margin: 0 0.25rem;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            background-color: rgba(78, 115, 223, 0.1);
+        }
+
+        .nav-link.active {
+            color: white !important;
+            background-color: var(--primary-color);
+        }
+
+        .metric-card {
+            border-left: 0.25rem solid var(--primary-color);
+            border-radius: 0.35rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            margin-bottom: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.35rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .metric-icon.bg-primary {
+            background-color: var(--primary-color);
+        }
+
+        .metric-icon.bg-success {
+            background-color: var(--success-color);
+        }
+
+        .metric-icon.bg-warning {
+            background-color: var(--warning-color);
+        }
+
+        .metric-icon.bg-danger {
+            background-color: var(--danger-color);
+        }
+
+        .persona-card, .feature-card, .staff-card {
+            border: none;
+            border-radius: 0.35rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            transition: transform 0.3s;
+            height: 100%;
+        }
+
+        .persona-card:hover, .feature-card:hover, .staff-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .persona-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .card {
+            border: none;
+            border-radius: 0.35rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            background-color: #f8f9fc;
+            border-bottom: 1px solid #e3e6f0;
+            font-weight: 700;
+            padding: 0.75rem 1.25rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #2e59d9;
+            border-color: #2653d4;
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .table {
+            color: var(--dark-color);
+        }
+
+        .table thead th {
+            border-bottom: 2px solid #e3e6f0;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+
+        .progress {
+            height: 0.5rem;
+            border-radius: 0.35rem;
+            background-color: #eaecf4;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .sidebar {
+            min-height: calc(100vh - 56px);
+            background-color: white;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            padding-top: 1rem;
+        }
+
+        .sidebar .nav-link {
+            padding: 0.75rem 1rem;
+            border-radius: 0.35rem;
+            margin-bottom: 0.25rem;
+            color: var(--dark-color) !important;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar .nav-link.active {
+            background-color: var(--primary-color);
+            color: white !important;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: rgba(78, 115, 223, 0.1);
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 0.75rem;
+            width: 1.25rem;
+            text-align: center;
+        }
+
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #224abe 100%);
+            padding: 1rem;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        .certification-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.4rem;
+        }
+
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+        }
+
+        .mobile-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 -0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            z-index: 1000;
+            display: none;
+        }
+
+        .mobile-nav .nav-link {
+            text-align: center;
+            padding: 0.75rem 0;
+            color: var(--dark-color) !important;
+        }
+
+        .mobile-nav .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+
+        .mobile-nav .nav-link i {
+            display: block;
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .mobile-nav .nav-link span {
+            font-size: 0.75rem;
+        }
+
+        .app-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+
+        @media (max-width: 767.98px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .mobile-nav {
+                display: flex;
+            }
+            
+            .main-content {
+                padding-bottom: 4rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .mobile-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script type="text/babel">
+        const { useState, useEffect, createContext, useContext, useReducer } = React;
+
+        // Mock API Service
+        const apiService = {
+            // Auth
+            login: async (credentials) => {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve({
+                            data: {
+                                token: 'mock-token-12345',
+                                user: {
+                                    id: 1,
+                                    name: 'Sarah Johnson',
+                                    email: 'sarah@eventhr.com',
+                                    role: 'HR Manager'
+                                }
+                            }
+                        });
+                    }, 500);
+                });
+            },
+
+            // Dashboard
+            getDashboardMetrics: async () => {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve({
+                            data: {
+                                activeEvents: 12,
+                                staffAvailable: 87,
+                                pendingOnboarding: 14,
+                                expiringCertifications: 23
+                            }
+                        });
+                    }, 500);
+                });
+            },
+
+            // Events
+            getEvents: async () => {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve({
+                            data: [
+                                {
+                                    id: 1,
+                                    name: 'Tech Conference 2025',
+                                    date: '2025-11-15',
+                                    location: 'Convention Center',
+                                    priority: 'High',
+                                    staffRequired: 50,
+                                    staffAssigned: 45,
+                                    status: 'Upcoming'
+                                },
+                                {
+                                    id: 2,
+                                    name: 'Corporate Gala Dinner',
+                                    date: '2025-11-20',
+                                    location: 'Grand Hotel',
+                                    priority: 'Medium',
+                                    staffRequired: 25,
+                                    staffAssigned: 22,
+                                    status: 'Upcoming'
+                                },
+                                {
+                                    id: 3,
+                                    name: 'Product Launch Event',
+                                    date: '2025-11-25',
+                                    location: 'City Exhibition Hall',
+                                    priority: 'High',
+                                    staffRequired: 30,
+                                    staffAssigned: 18,
+                                    status: 'Upcoming'
+                                },
+                                {
+                                    id: 4,
+                                    name: 'Charity Fundraiser',
+                                    date: '2025-12-05',
+                                    location: 'Community Center',
+                                    priority: 'Low',
+                                    staffRequired: 15,
+                                    staffAssigned: 15,
+                                    status: 'Upcoming'
+                                }
+                            ]
+                        });
+                    }, 500);
+                });
+            },
+
+            // Staff
+            getStaff: async () => {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve({
+                            data: [
+                                {
+                                    id: 1,
+                                    name: 'Michael Chen',
+                                    email: 'michael@eventhr.com',
+                                    phone: '(555) 123-4567',
+                                    role: 'Event Manager',
+                                    skills: ['Event Planning', 'Team Management'],
+                                    availability: true,
+                                    onboardingStatus: 'Completed',
+                                    certifications: [
+                                        { id: 1, name: 'Event Management', status: 'Active' },
+                                        { id: 2, name: 'First Aid', status: 'Expiring Soon' }
+                                    ]
+                                },
+                                {
+                                    id: 2,
+                                    name: 'Emma Rodriguez',
+                                    email: 'emma@eventhr.com',
+                                    phone: '(555) 987-6543',
+                                    role: 'Event Staff',
+                                    skills: ['Customer Service', 'Hospitality'],
+                                    availability: true,
+                                    onboardingStatus: 'Completed',
+                                    certifications: [
+                                        { id: 3, name: 'Hospitality', status: 'Active' }
+                                    ]
+                                },
+                                {
+                                    id: 3,
+                                    name: 'James Wilson',
+                                    email: 'james@eventhr.com',
+                                    phone: '(555) 456-7890',
+                                    role: 'Technical Staff',
+                                    skills: ['Audio/Visual', 'IT Support'],
+                                    availability: false,
+                                    onboardingStatus: 'Pending',
+                                    certifications: [
+                                        { id: 4, name: 'AV Technician', status: 'Active' },
+                                        { id: 5, name: 'Fire Safety', status: 'Expired' }
+                                    ]
+                                }
+                            ]
+                        });
+                    }, 500);
+                });
+            },
+
+            getStaffAvailability: async () => {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve({
+                            data: {
+                                eventManagers: 8,
+                                technicalStaff: 12,
+                                hospitalityStaff: 25,
+                                securityPersonnel: 15,
+                                generalSupport: 27
+                            }
+                        });
+                    }, 500);
+                });
+            }
+        };
+
+        // Auth Context
+        const AuthContext = createContext();
+
+        const authReducer = (state, action) => {
+            switch (action.type) {
+                case 'LOGIN_SUCCESS':
+                    localStorage.setItem('token', action.payload.token);
+                    return {
+                        ...state,
+                        isAuthenticated: true,
+                        token: action.payload.token,
+                        user: action.payload.user,
+                        loading: false
+                    };
+                case 'LOGIN_FAIL':
+                case 'LOGOUT':
+                    localStorage.removeItem('token');
+                    return {
+                        ...state,
+                        isAuthenticated: false,
+                        token: null,
+                        user: null,
+                        loading: false
+                    };
+                case 'SET_LOADING':
+                    return {
+                        ...state,
+                        loading: true
+                    };
+                default:
+                    return state;
+            }
+        };
+
+        const AuthProvider = ({ children }) => {
+            const [state, dispatch] = useReducer(authReducer, {
+                isAuthenticated: false,
+                token: localStorage.getItem('token'),
+                user: null,
+                loading: false
+            });
+
+            const login = async (formData) => {
+                dispatch({ type: 'SET_LOADING' });
+                try {
+                    const res = await apiService.login(formData);
+                    dispatch({
+                        type: 'LOGIN_SUCCESS',
+                        payload: res.data
+                    });
+                    return true;
+                } catch (err) {
+                    dispatch({ type: 'LOGIN_FAIL' });
+                    return false;
+                }
+            };
+
+            const logout = () => {
+                dispatch({ type: 'LOGOUT' });
+            };
+
+            return (
+                <AuthContext.Provider value={{ ...state, login, logout }}>
+                    {children}
+                </AuthContext.Provider>
+            );
+        };
+
+        const useAuth = () => useContext(AuthContext);
+
+        // Loading Spinner Component
+        const LoadingSpinner = () => (
+            <div className="loading-spinner">
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        );
+
+        // Login Component
+        const Login = () => {
+            const [email, setEmail] = useState('');
+            const [password, setPassword] = useState('');
+            const [error, setError] = useState('');
+            const { login } = useAuth();
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                setError('');
+                
+                const success = await login({ email, password });
+                if (!success) {
+                    setError('Invalid credentials');
+                }
+            };
+
+            return (
+                <div className="login-container">
+                    <div className="container">
+                        <div className="row justify-content-center">
+                            <div className="col-md-6 col-lg-4">
+                                <div className="card login-card">
+                                    <div className="card-body p-5">
+                                        <div className="text-center mb-4">
+                                            <div className="app-icon mx-auto mb-3">
+                                                E
+                                            </div>
+                                            <h1 className="h3 text-gray-900 mb-2">EventHR Pro</h1>
+                                            <p className="text-muted">HR Management for Events</p>
+                                        </div>
+                                        
+                                        {error && (
+                                            <div className="alert alert-danger" role="alert">
+                                                {error}
+                                            </div>
+                                        )}
+                                        
+                                        <form onSubmit={handleSubmit}>
+                                            <div className="mb-3">
+                                                <label htmlFor="email" className="form-label">Email address</label>
+                                                <input
+                                                    type="email"
+                                                    className="form-control"
+                                                    id="email"
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    required
+                                                />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label htmlFor="password" className="form-label">Password</label>
+                                                <input
+                                                    type="password"
+                                                    className="form-control"
+                                                    id="password"
+                                                    value={password}
+                                                    onChange={(e) => setPassword(e.target.value)}
+                                                    required
+                                                />
+                                            </div>
+                                            <div className="d-grid gap-2">
+                                                <button type="submit" className="btn btn-primary">
+                                                    Login
+                                                </button>
+                                            </div>
+                                        </form>
+                                        
+                                        <div className="text-center mt-4">
+                                            <small className="text-muted">Demo credentials: admin@eventhr.com / password</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Navbar Component
+        const Navbar = () => {
+            const { user, logout } = useAuth();
+            const [activePage, setActivePage] = useState('dashboard');
+
+            return (
+                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                    <div className="container-fluid">
+                        <a className="navbar-brand" href="#">
+                            <div className="app-icon me-2">E</div>
+                            EventHR Pro
+                        </a>
+                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+                        <div className="collapse navbar-collapse" id="navbarNav">
+                            <ul className="navbar-nav me-auto d-none d-md-flex">
+                                <li className="nav-item">
+                                    <a 
+                                        className={`nav-link ${activePage === 'dashboard' ? 'active' : ''}`} 
+                                        href="#" 
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setActivePage('dashboard');
+                                        }}
+                                    >
+                                        Dashboard
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a 
+                                        className={`nav-link ${activePage === 'events' ? 'active' : ''}`} 
+                                        href="#" 
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setActivePage('events');
+                                        }}
+                                    >
+                                        Events
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a 
+                                        className={`nav-link ${activePage === 'staff' ? 'active' : ''}`} 
+                                        href="#" 
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setActivePage('staff');
+                                        }}
+                                    >
+                                        Staff
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a 
+                                        className={`nav-link ${activePage === 'personas' ? 'active' : ''}`} 
+                                        href="#" 
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setActivePage('personas');
+                                        }}
+                                    >
+                                        Personas
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a 
+                                        className={`nav-link ${activePage === 'features' ? 'active' : ''}`} 
+                                        href="#" 
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setActivePage('features');
+                                        }}
+                                    >
+                                        Features
+                                    </a>
+                                </li>
+                            </ul>
+                            <div className="d-flex">
+                                <div className="dropdown">
+                                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                        <i className="fas fa-user-circle me-1"></i> {user?.name}
+                                    </a>
+                                    <ul className="dropdown-menu dropdown-menu-end">
+                                        <li><a className="dropdown-item" href="#">Profile</a></li>
+                                        <li><a className="dropdown-item" href="#">Settings</a></li>
+                                        <li><hr className="dropdown-divider" /></li>
+                                        <li><a className="dropdown-item" href="#" onClick={logout}>Logout</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            );
+        };
+
+        // Sidebar Component
+        const Sidebar = ({ activePage, setActivePage }) => {
+            return (
+                <div className="col-md-3 col-lg-2 d-md-block sidebar collapse">
+                    <div className="position-sticky pt-3">
+                        <ul className="nav flex-column">
+                            <li className="nav-item">
+                                <a 
+                                    className={`nav-link ${activePage === 'dashboard' ? 'active' : ''}`} 
+                                    href="#" 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setActivePage('dashboard');
+                                    }}
+                                >
+                                    <i className="fas fa-tachometer-alt"></i> Dashboard
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a 
+                                    className={`nav-link ${activePage === 'events' ? 'active' : ''}`} 
+                                    href="#" 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setActivePage('events');
+                                    }}
+                                >
+                                    <i className="fas fa-calendar-alt"></i> Event Management
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a 
+                                    className={`nav-link ${activePage === 'staff' ? 'active' : ''}`} 
+                                    href="#" 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setActivePage('staff');
+                                    }}
+                                >
+                                    <i className="fas fa-users"></i> Staff Directory
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a 
+                                    className={`nav-link ${activePage === 'personas' ? 'active' : ''}`} 
+                                    href="#" 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setActivePage('personas');
+                                    }}
+                                >
+                                    <i className="fas fa-user-friends"></i> User Personas
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a 
+                                    className={`nav-link ${activePage === 'features' ? 'active' : ''}`} 
+                                    href="#" 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setActivePage('features');
+                                    }}
+                                >
+                                    <i className="fas fa-list-ul"></i> Feature Set
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a 
+                                    className={`nav-link ${activePage === 'analytics' ? 'active' : ''}`} 
+                                    href="#" 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setActivePage('analytics');
+                                    }}
+                                >
+                                    <i className="fas fa-chart-line"></i> Analytics
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a 
+                                    className={`nav-link ${activePage === 'time' ? 'active' : ''}`} 
+                                    href="#" 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setActivePage('time');
+                                    }}
+                                >
+                                    <i className="fas fa-clock"></i> Time & Attendance
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a 
+                                    className={`nav-link ${activePage === 'reports' ? 'active' : ''}`} 
+                                    href="#" 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setActivePage('reports');
+                                    }}
+                                >
+                                    <i className="fas fa-file-alt"></i> Reports
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a 
+                                    className={`nav-link ${activePage === 'settings' ? 'active' : ''}`} 
+                                    href="#" 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setActivePage('settings');
+                                    }}
+                                >
+                                    <i className="fas fa-cog"></i> Settings
+                                </a>
+                            </li>
+                        </ul>
+                        
+                        <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                            <span>SUPPORT</span>
+                        </h6>
+                        <ul className="nav flex-column mb-2">
+                            <li className="nav-item">
+                                <a className="nav-link" href="#">
+                                    <i className="fas fa-question-circle"></i> Help Center
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="#">
+                                    <i className="fas fa-envelope"></i> Contact Support
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            );
+        };
+
+        // Mobile Navigation Component
+        const MobileNav = ({ activePage, setActivePage }) => {
+            return (
+                <nav className="mobile-nav">
+                    <div className="container-fluid">
+                        <ul className="nav nav-justified">
+                            <li className="nav-item">
+                                <a 
+                                    className={`nav-link ${activePage === 'dashboard' ? 'active' : ''}`} 
+                                    href="#" 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setActivePage('dashboard');
+                                    }}
+                                >
+                                    <i className="fas fa-tachometer-alt"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a 
+                                    className={`nav-link ${activePage === 'events' ? 'active' : ''}`} 
+                                    href="#" 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setActivePage('events');
+                                    }}
+                                >
+                                    <i className="fas fa-calendar-alt"></i>
+                                    <span>Events</span>
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a 
+                                    className={`nav-link ${activePage === 'staff' ? 'active' : ''}`} 
+                                    href="#" 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setActivePage('staff');
+                                    }}
+                                >
+                                    <i className="fas fa-users"></i>
+                                    <span>Staff</span>
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a 
+                                    className={`nav-link ${activePage === 'personas' ? 'active' : ''}`} 
+                                    href="#" 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setActivePage('personas');
+                                    }}
+                                >
+                                    <i className="fas fa-user-friends"></i>
+                                    <span>Personas</span>
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a 
+                                    className={`nav-link ${activePage === 'features' ? 'active' : ''}`} 
+                                    href="#" 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setActivePage('features');
+                                    }}
+                                >
+                                    <i className="fas fa-list-ul"></i>
+                                    <span>Features</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            );
+        };
+
+        // Dashboard Component
+        const Dashboard = () => {
+            const [metrics, setMetrics] = useState({
+                activeEvents: 0,
+                staffAvailable: 0,
+                pendingOnboarding: 0,
+                expiringCertifications: 0
+            });
+            const [loading, setLoading] = useState(true);
+
+            useEffect(() => {
+                const fetchMetrics = async () => {
+                    try {
+                        const res = await apiService.getDashboardMetrics();
+                        setMetrics(res.data);
+                    } catch (err) {
+                        console.error('Error fetching dashboard metrics:', err);
+                    } finally {
+                        setLoading(false);
+                    }
+                };
+
+                fetchMetrics();
+            }, []);
+
+            if (loading) {
+                return <LoadingSpinner />;
+            }
+
+            return (
+                <div className="main-content">
+                    <h1 className="page-title">HR Dashboard</h1>
+                    <p className="lead">Welcome back, Sarah. Here's what's happening with your team today.</p>
+                    
+                    <div className="row mb-4">
+                        <div className="col-xl-3 col-md-6 mb-4">
+                            <div className="card metric-card h-100">
+                                <div className="card-body">
+                                    <div className="row align-items-center">
+                                        <div className="col">
+                                            <div className="metric-icon bg-primary">
+                                                <i className="fas fa-calendar-alt"></i>
+                                            </div>
+                                        </div>
+                                        <div className="col">
+                                            <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">Active Events</div>
+                                            <div className="h5 mb-0 font-weight-bold text-gray-800">{metrics.activeEvents}</div>
+                                            <span className="badge bg-success">+3 from last week</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="col-xl-3 col-md-6 mb-4">
+                            <div className="card metric-card h-100">
+                                <div className="card-body">
+                                    <div className="row align-items-center">
+                                        <div className="col">
+                                            <div className="metric-icon bg-success">
+                                                <i className="fas fa-users"></i>
+                                            </div>
+                                        </div>
+                                        <div className="col">
+                                            <div className="text-xs font-weight-bold text-success text-uppercase mb-1">Staff Available</div>
+                                            <div className="h5 mb-0 font-weight-bold text-gray-800">{metrics.staffAvailable}</div>
+                                            <span className="badge bg-danger">-5 from last week</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="col-xl-3 col-md-6 mb-4">
+                            <div className="card metric-card h-100">
+                                <div className="card-body">
+                                    <div className="row align-items-center">
+                                        <div className="col">
+                                            <div className="metric-icon bg-warning">
+                                                <i className="fas fa-user-plus"></i>
+                                            </div>
+                                        </div>
+                                        <div className="col">
+                                            <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Onboarding</div>
+                                            <div className="h5 mb-0 font-weight-bold text-gray-800">{metrics.pendingOnboarding}</div>
+                                            <span className="badge bg-success">+8 from last week</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="col-xl-3 col-md-6 mb-4">
+                            <div className="card metric-card h-100">
+                                <div className="card-body">
+                                    <div className="row align-items-center">
+                                        <div className="col">
+                                            <div className="metric-icon bg-danger">
+                                                <i className="fas fa-certificate"></i>
+                                            </div>
+                                        </div>
+                                        <div className="col">
+                                            <div className="text-xs font-weight-bold text-danger text-uppercase mb-1">Certifications Expiring</div>
+                                            <div className="h5 mb-0 font-weight-bold text-gray-800">{metrics.expiringCertifications}</div>
+                                            <span className="badge bg-danger">+12 from last week</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="row mb-4">
+                        <div className="col-lg-8">
+                            <div className="card">
+                                <div className="card-header d-flex justify-content-between align-items-center">
+                                    <h5 className="mb-0">Upcoming Events</h5>
+                                    <button className="btn btn-outline-primary btn-sm">
+                                        View All <i className="fas fa-arrow-right ms-1"></i>
+                                    </button>
+                                </div>
+                                <div className="card-body">
+                                    <EventList limit={4} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-4">
+                            <div className="card">
+                                <div className="card-header">
+                                    <h5 className="mb-0">Staff Availability</h5>
+                                </div>
+                                <div className="card-body">
+                                    <StaffAvailability />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="row">
+                        <div className="col">
+                            <div className="card">
+                                <div className="card-header">
+                                    <h5 className="mb-0">Top Skills Needed</h5>
+                                </div>
+                                <div className="card-body">
+                                    <TopSkills />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Event List Component
+        const EventList = ({ limit }) => {
+            const [events, setEvents] = useState([]);
+            const [loading, setLoading] = useState(true);
+
+            useEffect(() => {
+                const fetchEvents = async () => {
+                    try {
+                        const res = await apiService.getEvents();
+                        setEvents(res.data);
+                    } catch (err) {
+                        console.error('Error fetching events:', err);
+                    } finally {
+                        setLoading(false);
+                    }
+                };
+
+                fetchEvents();
+            }, []);
+
+            const getPriorityBadge = (priority) => {
+                switch (priority) {
+                    case 'High':
+                        return <span className="badge bg-danger">High Priority</span>;
+                    case 'Medium':
+                        return <span className="badge bg-warning">Medium Priority</span>;
+                    case 'Low':
+                        return <span className="badge bg-info">Low Priority</span>;
+                    default:
+                        return <span className="badge bg-secondary">Unknown</span>;
+                }
+            };
+
+            const getStaffStatus = (staffAssigned, staffRequired) => {
+                if (staffAssigned === staffRequired) {
+                    return <span className="badge bg-success">Fully Staffed</span>;
+                } else if (staffAssigned >= staffRequired * 0.8) {
+                    return <span className="badge bg-warning">Almost Staffed</span>;
+                } else {
+                    return <span className="badge bg-danger">Need Staff</span>;
+                }
+            };
+
+            const displayEvents = limit ? events.slice(0, limit) : events;
+
+            if (loading) {
+                return <LoadingSpinner />;
+            }
+
+            return (
+                <div className="table-responsive">
+                    <table className="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th>Staff</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {displayEvents.map((event) => (
+                                <tr key={event.id}>
+                                    <td>
+                                        <div className="fw-bold">{event.name}</div>
+                                        {getPriorityBadge(event.priority)}
+                                    </td>
+                                    <td>
+                                        <div className="d-flex align-items-center">
+                                            <i className="fas fa-calendar-alt me-2 text-muted"></i>
+                                            {new Date(event.date).toLocaleDateString()}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div className="d-flex align-items-center">
+                                            <i className="fas fa-map-marker-alt me-2 text-muted"></i>
+                                            {event.location}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div className="d-flex align-items-center">
+                                            <i className="fas fa-users me-2 text-muted"></i>
+                                            {event.staffAssigned}/{event.staffRequired}
+                                        </div>
+                                    </td>
+                                    <td>{getStaffStatus(event.staffAssigned, event.staffRequired)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            );
+        };
+
+        // Staff Availability Component
+        const StaffAvailability = () => {
+            const [availability, setAvailability] = useState({
+                eventManagers: { available: 0, total: 10 },
+                technicalStaff: { available: 0, total: 20 },
+                hospitalityStaff: { available: 0, total: 30 },
+                securityPersonnel: { available: 0, total: 15 },
+                generalSupport: { available: 0, total: 40 }
+            });
+            const [loading, setLoading] = useState(true);
+
+            useEffect(() => {
+                const fetchAvailability = async () => {
+                    try {
+                        const res = await apiService.getStaffAvailability();
+                        setAvailability({
+                            eventManagers: { available: res.data.eventManagers, total: 10 },
+                            technicalStaff: { available: res.data.technicalStaff, total: 20 },
+                            hospitalityStaff: { available: res.data.hospitalityStaff, total: 30 },
+                            securityPersonnel: { available: res.data.securityPersonnel, total: 15 },
+                            generalSupport: { available: res.data.generalSupport, total: 40 }
+                        });
+                    } catch (err) {
+                        console.error('Error fetching staff availability:', err);
+                    } finally {
+                        setLoading(false);
+                    }
+                };
+
+                fetchAvailability();
+            }, []);
+
+            if (loading) {
+                return <LoadingSpinner />;
+            }
+
+            const roles = [
+                { name: 'Event Managers', data: availability.eventManagers },
+                { name: 'Technical Staff', data: availability.technicalStaff },
+                { name: 'Hospitality Staff', data: availability.hospitalityStaff },
+                { name: 'Security Personnel', data: availability.securityPersonnel },
+                { name: 'General Support', data: availability.generalSupport }
+            ];
+
+            return (
+                <div>
+                    {roles.map((role, index) => (
+                        <div key={index} className="mb-3">
+                            <div className="d-flex justify-content-between mb-1">
+                                <span>{role.name}</span>
+                                <span>{role.data.available}/{role.data.total}</span>
+                            </div>
+                            <div className="progress">
+                                <div 
+                                    className="progress-bar" 
+                                    role="progressbar" 
+                                    style={{ width: `${(role.data.available / role.data.total) * 100}%` }}
+                                    className={role.data.available / role.data.total > 0.7 ? 'bg-success' : role.data.available / role.data.total > 0.4 ? 'bg-warning' : 'bg-danger'}
+                                ></div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            );
+        };
+
+        // Top Skills Component
+        const TopSkills = () => {
+            const skills = [
+                { name: 'Audio/Visual Tech', status: 'certified' },
+                { name: 'Catering Service', status: 'certified' },
+                { name: 'Crowd Management', status: 'expiring' },
+                { name: 'First Aid', status: 'certified' },
+                { name: 'Fire Safety', status: 'expired' },
+                { name: 'VIP Hosting', status: 'certified' },
+                { name: 'Stage Management', status: 'expiring' },
+                { name: 'Social Media', status: 'certified' }
+            ];
+
+            const getStatusBadge = (status) => {
+                switch (status) {
+                    case 'certified':
+                        return <span className="badge bg-success">Certified</span>;
+                    case 'expiring':
+                        return <span className="badge bg-warning">Expiring Soon</span>;
+                    case 'expired':
+                        return <span className="badge bg-danger">Expired</span>;
+                    default:
+                        return <span className="badge bg-secondary">Unknown</span>;
+                }
+            };
+
+            return (
+                <div className="d-flex flex-wrap">
+                    {skills.map((skill, index) => (
+                        <div key={index} className="me-3 mb-2">
+                            <span className="me-2">{skill.name}</span>
+                            {getStatusBadge(skill.status)}
+                        </div>
+                    ))}
+                </div>
+            );
+        };
+
+        // Events Page Component
+        const EventsPage = () => {
+            return (
+                <div className="main-content">
+                    <div className="d-flex justify-content-between align-items-center mb-4">
+                        <h1 className="page-title">Event Management</h1>
+                        <button className="btn btn-primary">
+                            <i className="fas fa-plus me-2"></i> Create New Event
+                        </button>
+                    </div>
+                    
+                    <div className="card">
+                        <div className="card-header">
+                            <h5 className="mb-0">All Events</h5>
+                        </div>
+                        <div className="card-body">
+                            <EventList />
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Staff Page Component
+        const StaffPage = () => {
+            const [staff, setStaff] = useState([]);
+            const [loading, setLoading] = useState(true);
+
+            useEffect(() => {
+                const fetchStaff = async () => {
+                    try {
+                        const res = await apiService.getStaff();
+                        setStaff(res.data);
+                    } catch (err) {
+                        console.error('Error fetching staff:', err);
+                    } finally {
+                        setLoading(false);
+                    }
+                };
+
+                fetchStaff();
+            }, []);
+
+            const getAvailabilityBadge = (availability) => {
+                return availability 
+                    ? <span className="badge bg-success">Available</span> 
+                    : <span className="badge bg-danger">Unavailable</span>;
+            };
+
+            const getOnboardingBadge = (status) => {
+                switch (status) {
+                    case 'Completed':
+                        return <span className="badge bg-success">Completed</span>;
+                    case 'In Progress':
+                        return <span className="badge bg-warning">In Progress</span>;
+                    case 'Pending':
+                        return <span className="badge bg-danger">Pending</span>;
+                    default:
+                        return <span className="badge bg-secondary">{status}</span>;
+                }
+            };
+
+            const getCertificationBadge = (status) => {
+                switch (status) {
+                    case 'Active':
+                        return <span className="badge certification-badge bg-success">Active</span>;
+                    case 'Expiring Soon':
+                        return <span className="badge certification-badge bg-warning">Expiring</span>;
+                    case 'Expired':
+                        return <span className="badge certification-badge bg-danger">Expired</span>;
+                    default:
+                        return <span className="badge certification-badge bg-secondary">{status}</span>;
+                }
+            };
+
+            if (loading) {
+                return <LoadingSpinner />;
+            }
+
+            return (
+                <div className="main-content">
+                    <div className="d-flex justify-content-between align-items-center mb-4">
+                        <h1 className="page-title">Staff Directory</h1>
+                        <button className="btn btn-primary">
+                            <i className="fas fa-user-plus me-2"></i> Add New Staff
+                        </button>
+                    </div>
+                    
+                    <div className="row">
+                        {staff.map((member) => (
+                            <div className="col-lg-4 col-md-6 mb-4" key={member.id}>
+                                <div className="card staff-card h-100">
+                                    <div className="card-body">
+                                        <div className="d-flex align-items-center mb-3">
+                                            <div className="rounded-circle bg-primary d-flex align-items-center justify-content-center me-3" style={{ width: '50px', height: '50px' }}>
+                                                <i className="fas fa-user text-white"></i>
+                                            </div>
+                                            <div>
+                                                <h5 className="mb-0">{member.name}</h5>
+                                                <p className="text-muted mb-0">{member.role}</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="mb-2">
+                                            <strong>Email:</strong> {member.email}
+                                        </div>
+                                        <div className="mb-2">
+                                            <strong>Phone:</strong> {member.phone}
+                                        </div>
+                                        <div className="mb-2">
+                                            <strong>Availability:</strong> {getAvailabilityBadge(member.availability)}
+                                        </div>
+                                        <div className="mb-2">
+                                            <strong>Onboarding:</strong> {getOnboardingBadge(member.onboardingStatus)}
+                                        </div>
+                                        
+                                        <div className="mb-2">
+                                            <strong>Skills:</strong>
+                                            <div className="mt-1">
+                                                {member.skills.map((skill, index) => (
+                                                    <span key={index} className="badge bg-secondary me-1 mb-1">{skill}</span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <strong>Certifications:</strong>
+                                            <div className="mt-1">
+                                                {member.certifications.map((cert) => (
+                                                    <div key={cert.id} className="d-flex justify-content-between align-items-center mb-1">
+                                                        <span>{cert.name}</span>
+                                                        {getCertificationBadge(cert.status)}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        // User Personas Component
+        const UserPersonas = () => {
+            const personas = [
+                {
+                    name: 'Sarah Johnson',
+                    role: 'HR Manager',
+                    icon: <i className="fas fa-user-tie persona-icon"></i>,
+                    goals: [
+                        'Efficiently staff all events',
+                        'Ensure compliance with certifications',
+                        'Reduce administrative workload'
+                    ],
+                    challenges: [
+                        'Coordinating staff across multiple events',
+                        'Tracking certifications for 100+ staff',
+                        'Onboarding temporary staff quickly'
+                    ],
+                    howAppHelps: 'Centralized dashboard for all event staffing needs, automated certification tracking, and streamlined onboarding process.'
+                },
+                {
+                    name: 'Michael Chen',
+                    role: 'Event Manager',
+                    icon: <i className="fas fa-calendar-check persona-icon"></i>,
+                    goals: [
+                        'Ensure adequate staffing for events',
+                        'Communicate effectively with staff',
+                        'Track staff performance during events'
+                    ],
+                    challenges: [
+                        'Last-minute staff changes',
+                        'Limited visibility into staff availability',
+                        'Difficulty providing real-time feedback'
+                    ],
+                    howAppHelps: 'Real-time staff availability, instant communication tools, and performance tracking features for event-specific feedback.'
+                },
+                {
+                    name: 'Emma Rodriguez',
+                    role: 'Event Staff',
+                    icon: <i className="fas fa-user-clock persona-icon"></i>,
+                    goals: [
+                        'Find available event opportunities',
+                        'Manage schedule efficiently',
+                        'Track payments and hours worked'
+                    ],
+                    challenges: [
+                        'Unclear communication about event details',
+                        'Difficulty tracking hours across multiple events',
+                        'Delayed payments'
+                    ],
+                    howAppHelps: 'Self-service portal for viewing available events, mobile time tracking, and transparent payment processing.'
+                }
+            ];
+
+            return (
+                <div className="main-content">
+                    <h1 className="page-title">User Personas</h1>
+                    <div className="row">
+                        {personas.map((persona, index) => (
+                            <div className="col-lg-4 col-md-6 mb-4" key={index}>
+                                <div className="card persona-card h-100">
+                                    <div className="card-header text-center">
+                                        <div className="mb-2">{persona.icon}</div>
+                                        <h4 className="mb-0">{persona.name}</h4>
+                                        <p className="text-muted mb-0">{persona.role}</p>
+                                    </div>
+                                    <div className="card-body">
+                                        <h5>Goals</h5>
+                                        <ul>
+                                            {persona.goals.map((goal, i) => (
+                                                <li key={i}>{goal}</li>
+                                            ))}
+                                        </ul>
+                                        
+                                        <h5>Challenges</h5>
+                                        <ul>
+                                            {persona.challenges.map((challenge, i) => (
+                                                <li key={i}>{challenge}</li>
+                                            ))}
+                                        </ul>
+                                        
+                                        <h5>How App Helps</h5>
+                                        <p>{persona.howAppHelps}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        // Feature Set Component
+        const FeatureSet = () => {
+            const features = [
+                {
+                    title: 'Event-Based Scheduling System',
+                    priority: 'High',
+                    status: 'Development',
+                    description: 'Assign staff to events based on availability, skills, certifications, and event requirements. Includes drag-and-drop interface and conflict detection.',
+                    icon: <i className="fas fa-list feature-icon"></i>
+                },
+                {
+                    title: 'Skills & Certification Tracking',
+                    priority: 'High',
+                    status: 'Testing',
+                    description: 'Comprehensive system to track staff skills, certifications, and expiration dates. Automated alerts for renewals and compliance reporting.',
+                    icon: <i className="fas fa-check-circle feature-icon"></i>
+                },
+                {
+                    title: 'Mobile Time Tracking with Geolocation',
+                    priority: 'High',
+                    status: 'Released',
+                    description: 'Mobile app for staff to clock in/out at event locations with geolocation verification. Real-time attendance tracking and overtime calculation.',
+                    icon: <i className="fas fa-clock feature-icon"></i>
+                },
+                {
+                    title: 'Rapid Onboarding for Temporary Staff',
+                    priority: 'Medium',
+                    status: 'Planning',
+                    description: 'Streamlined digital onboarding process for temporary and contract staff. Digital forms, e-signatures, and automated training assignments.',
+                    icon: <i className="fas fa-user-tie feature-icon"></i>
+                },
+                {
+                    title: 'Real-Time Communication During Events',
+                    priority: 'Medium',
+                    status: 'Development',
+                    description: 'Event-specific chat channels, announcements, and push notifications for staff coordination during events. Integration with walkie-talkie systems.',
+                    icon: <i className="fas fa-comments feature-icon"></i>
+                },
+                {
+                    title: 'Performance Analytics by Event Type',
+                    priority: 'Low',
+                    status: 'Backlog',
+                    description: 'Detailed analytics on staff performance across different event types. Identify top performers and areas for improvement based on event feedback.',
+                    icon: <i className="fas fa-chart-line feature-icon"></i>
+                }
+            ];
+
+            const getStatusBadge = (status) => {
+                switch (status) {
+                    case 'Released':
+                        return <span className="badge bg-success">Released</span>;
+                    case 'Testing':
+                        return <span className="badge bg-info">Testing</span>;
+                    case 'Development':
+                        return <span className="badge bg-warning">Development</span>;
+                    case 'Planning':
+                        return <span className="badge bg-primary">Planning</span>;
+                    case 'Backlog':
+                        return <span className="badge bg-secondary">Backlog</span>;
+                    default:
+                        return <span className="badge bg-secondary">{status}</span>;
+                }
+            };
+
+            const getPriorityBadge = (priority) => {
+                switch (priority) {
+                    case 'High':
+                        return <span className="badge bg-danger">High Priority</span>;
+                    case 'Medium':
+                        return <span className="badge bg-warning">Medium Priority</span>;
+                    case 'Low':
+                        return <span className="badge bg-info">Low Priority</span>;
+                    default:
+                        return <span className="badge bg-secondary">{priority}</span>;
+                }
+            };
+
+            return (
+                <div className="main-content">
+                    <h1 className="page-title">Feature Set</h1>
+                    <div className="row">
+                        {features.map((feature, index) => (
+                            <div className="col-lg-4 col-md-6 mb-4" key={index}>
+                                <div className="card feature-card h-100">
+                                    <div className="card-header d-flex justify-content-between align-items-center">
+                                        <div className="d-flex align-items-center">
+                                            {feature.icon}
+                                            <h5 className="mb-0 ms-2">{feature.title}</h5>
+                                        </div>
+                                        <div>
+                                            {getPriorityBadge(feature.priority)}
+                                        </div>
+                                    </div>
+                                    <div className="card-body">
+                                        <p>{feature.description}</p>
+                                    </div>
+                                    <div className="card-footer d-flex justify-content-between align-items-center">
+                                        {getStatusBadge(feature.status)}
+                                        <button className="btn btn-outline-primary btn-sm">View Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        // Placeholder Components for other pages
+        const AnalyticsPage = () => (
+            <div className="main-content">
+                <h1 className="page-title">Analytics</h1>
+                <div className="card">
+                    <div className="card-body">
+                        <p>Analytics features coming soon...</p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const TimePage = () => (
+            <div className="main-content">
+                <h1 className="page-title">Time & Attendance</h1>
+                <div className="card">
+                    <div className="card-body">
+                        <p>Time & Attendance features coming soon...</p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const ReportsPage = () => (
+            <div className="main-content">
+                <h1 className="page-title">Reports</h1>
+                <div className="card">
+                    <div className="card-body">
+                        <p>Reports features coming soon...</p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const SettingsPage = () => (
+            <div className="main-content">
+                <h1 className="page-title">Settings</h1>
+                <div className="card">
+                    <div className="card-body">
+                        <p>Settings features coming soon...</p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        // Main App Component
+        const App = () => {
+            const { isAuthenticated, loading } = useAuth();
+            const [activePage, setActivePage] = useState('dashboard');
+
+            if (loading) {
+                return <LoadingSpinner />;
+            }
+
+            if (!isAuthenticated) {
+                return <Login />;
+            }
+
+            const renderPage = () => {
+                switch (activePage) {
+                    case 'dashboard':
+                        return <Dashboard />;
+                    case 'events':
+                        return <EventsPage />;
+                    case 'staff':
+                        return <StaffPage />;
+                    case 'personas':
+                        return <UserPersonas />;
+                    case 'features':
+                        return <FeatureSet />;
+                    case 'analytics':
+                        return <AnalyticsPage />;
+                    case 'time':
+                        return <TimePage />;
+                    case 'reports':
+                        return <ReportsPage />;
+                    case 'settings':
+                        return <SettingsPage />;
+                    default:
+                        return <Dashboard />;
+                }
+            };
+
+            return (
+                <div>
+                    <Navbar />
+                    <div className="container-fluid">
+                        <div className="row">
+                            <Sidebar activePage={activePage} setActivePage={setActivePage} />
+                            <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+                                {renderPage()}
+                            </main>
+                        </div>
+                    </div>
+                    <MobileNav activePage={activePage} setActivePage={setActivePage} />
+                </div>
+            );
+        };
+
+        // Root Component
+        const Root = () => {
+            return (
+                <AuthProvider>
+                    <App />
+                </AuthProvider>
+            );
+        };
+
+        // Render the application
+        ReactDOM.render(<Root />, document.getElementById('root'));
+    </script>
+</body>
+</html>
